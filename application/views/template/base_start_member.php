@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?php echo (isset($title) ? 'Sewpad | ' . $title : 'Sewpad'); ?></title>
+    <title><?php echo (isset($title) ? 'Ujian Online | ' . $title : 'Ujian Online'); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css');?>" rel="stylesheet">
@@ -42,4 +42,4 @@
   </head>
 
   <body id="page-top">
-    <?php $this->load->view('layouts/headerMember') ?>
+    <?php $this->load->view('template/headerMember') ?>

@@ -1,43 +1,52 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Register extends CI_Controller {
-
-	public function index()
-	{
-        $data['title'] = 'Register';
-        $this->load->view('registerView', $data);
-	}
-
-	public function create()
+class Register extends CI_Controller
+{
+    public function __construct()
     {
-        $this->load->helper('url','form');
-        $this->load->library('form_validation');
-        $this->load->model('User_model');
-        $this->form_validation->set_rules('nama_user', 'nama_user', 'trim|required');
-        $this->form_validation->set_rules('username', 'Username', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
-        if ($this->form_validation->run()==FALSE){
+        parent::__construct();
+        $this->load->helper(array('form','url'));
+        $this->load->library(array('session', 'form_validation'));
+        $this->load->database();
+        $this->load->model('user_model');
+    }
+
+    function index()
+    {
+        // set form validation rules
+        $this->form_validation->set_rules('name_user', 'Nama Lengkap', 'trim|required|alpha|min_length[3]|max_length[30]|xss_clean');
+        $this->form_validation->set_rules('username', 'UserName', 'trim|required|alpha|min_length[3]|max_length[30]|xss_clean');
+        $this->form_validation->set_rules('email', 'Email ID', 'trim|required|valid_email|is_unique[user.email]');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|matches[cpassword]|md5');
+        $this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required');
+
+        // submit
+        if ($this->form_validation->run() == FALSE)
+        {
+            // fails
             $this->load->view('registerView');
-        }else{
-                $this->User_model->insertUser();
-                echo "<script>alert('Successfully Created'); </script>";
-                redirect('Login','refresh');
         }
-     }
+        else
+        {
+            //insert user details into db
+            $data = array(
+                'name_user' => $this->input->post('name_user'),
+                'username' => $this->input->post('username'),
+                'email' => $this->input->post('email'),
+                'password' => $this->input->post('password')
+            );
 
-      function cekUsername($username)
-    {
-    	$this->load->model('User_model');
-        $result = $this->User_model->register($username);
-        if($result){
-                return true;
-            }else{
-                $this->form_validation->set_message('create',"Username is already used");
-                return false; 
+            if ($this->user_model->insert_user($data))
+            {
+                $this->session->set_flashdata('msg','<div class="alert alert-success text-center">You are Successfully Registered! Please login to access your Profile!</div>');
+                redirect('register/index');
             }
+            else
+            {
+                // error
+                $this->session->set_flashdata('msg','<div class="alert alert-danger text-center">Oops! Error.  Please try again later!!!</div>');
+                redirect('register/index');
+            }
+        }
     }
 }
-
-/* End of file register.php */
-/* Location: ./application/controllers/register.php */
+?>

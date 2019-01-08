@@ -1,66 +1,45 @@
 <?php
-    
-    defined('BASEPATH') OR exit('No direct script access allowed');
-    
-    class Login extends CI_Controller {
-    
-        public function index()
-        {
-            $data['title'] = 'Login';
-            $this->load->view('loginView', $data);
-        }
+class Login extends CI_Controller
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->helper(array('form','url','html'));
+		$this->load->library(array('session', 'form_validation'));
+		$this->load->database();
+		$this->load->model('user_model');
+	}
+    public function index()
+    {        
+		// get form input
+		$email = $this->input->post("email");
+        $password = $this->input->post("password");
 
-        public function logout()
+		// form validation
+		$this->form_validation->set_rules("email", "Email-ID", "trim|required|xss_clean");
+		$this->form_validation->set_rules("password", "Password", "trim|required|xss_clean");
+		
+		if ($this->form_validation->run() == FALSE)
         {
-            $this->load->library('session');
-            $this->session->unset_userdata('logged_in');
-            $this->session->sess_destroy();
-            redirect('Login','refresh');
-        }
-
-        public function cekDb($password)
-        {
-            $this->load->model('User_model');
-            $username = $this->input->post('username'); 
-            $result = $this->User_model->login($username,$password);
-            if($result){
-                $session_array = array();
-                foreach ($result as $key) {
-                    $session_array = array(
-                        'id'=>$key->id,
-                        'username'=>$key->username,
-                        'nama_user' => $key->nama_user,
-                        // 'company'=>$key->company
-                    );
-                    $this->session->set_userdata('logged_in',$session_array);
-                }
-                return true;
-            }else{
-                $this->form_validation->set_message('cekDb',"login failed");
-                return false;
-            }
-        }
-
-        public function cekLogin()
-        {
-            $this->load->library('form_validation');
-            $this->form_validation->set_rules('username', 'username', 'trim|required');
-            $this->form_validation->set_rules('password', 'password', 'trim|required|callback_cekDb');
-            if ($this->form_validation->run() == FALSE) {
-                $this->load->view('loginView');
-            } else {
-                $session_data = $this->session->userdata('logged_in');
-                $data['username'] = $session_data['username'];
-                // $data['level'] = $session_data['company'];
-                if ($data['username']=='admin') {
-                    redirect('HomeAdmin/');
-                }else{
-                    redirect('Member/');
-                }
-            }
-        }
+			// validation fail
+			$this->load->view('loginView');
+		}
+		else
+		{
+			// check for user credentials
+			$uresult = $this->user_model->get_user($email, $password);
+			if (count($uresult) > 0)
+			{
+				// set session
+				$sess_data = array('login' => TRUE, 'uname' => $uresult[0]->fname, 'uid' => $uresult[0]->id);
+				$this->session->set_userdata($sess_data);
+				redirect("profile/index");
+			}
+			else
+			{
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Wrong Email-ID or Password!</div>');
+				redirect('login/index');
+			}
+		}
     }
-    
-    /* End of file Controllername.php */
-    
-?>
+}

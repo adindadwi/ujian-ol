@@ -38,7 +38,7 @@
 		<div class="container">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<h1>
-					<a class="navbar-brand text-capitalize" href="index.php">
+					<a class="navbar-brand text-capitalize" href="<?php base_url('index')?>">
 						Ujian Online  
 					</a>
 				</h1>
@@ -50,16 +50,14 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav text-center  ml-lg-auto">
-						<li class="nav-item active  mr-3">
-							<a class="nav-link" href="index.php">Home
-								<span class="sr-only">(current)</span>
-							</a>
+						<li class="nav-item mr-3">
+							<a class="nav-link" href="<?php echo site_url()?>/Home">Home</a>
 						</li>
-						<li class="nav-item  mr-3">
-							<a class="nav-link" href="<?php echo site_url('/Register');?>">Register</a>
+						<li class="nav-item mr-3">
+							<a class="nav-link js-scroll-trigger" href="<?php echo site_url()?>/Login">Login</a>
 						</li>
-						<li class="nav-item  mr-3">
-							<a class="nav-link" href="<?php echo site_url('/Login');?>">Login</a>
+              			<li class="nav-item mr-3">
+						  <a class="nav-link js-scroll-trigger" href="<?php echo site_url()?>/Register">Register</a>
 						</li>
 						<!-- <li class="nav-item dropdown mr-3">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"

@@ -14,7 +14,7 @@ class Member extends CI_Controller {
         if($this->session->has_userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
 
-            if($session_data['username'] == 'admin') {
+            if($session_data['company'] != 'Member') {
                 redirect('HomeAdmin');
             }
         } else {
