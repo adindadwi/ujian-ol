@@ -1,5 +1,5 @@
 <?php
-class home extends CI_Controller
+class Home extends CI_Controller
 {
  public function __construct()
  {
@@ -10,7 +10,7 @@ class home extends CI_Controller
  
  function index()
  {
-  $this->load->view('home');
+      $this->load->view('home');
  }
  
  function logout()

@@ -30,9 +30,13 @@
                             </div>
                             <?php }?>
                                 <form role="form" action="" method="post" class="login-form">
-                                <div class="form-group">
-                                        <label class="sr-only" for="email">Nama User</label>
-                                        <input type="text" name="nama_user" placeholder="Nama lengkap user..." class="email form-control" id="nama_user">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="nama_user">Nama User</label>
+                                        <input type="text" name="nama_user" placeholder="Nama lengkap user..." class="nama_user form-control" id="nama_user">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="email">Email</label>
+                                        <input type="text" name="email" placeholder="Email..." class="email form-control" id="email">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="username">Username</label>
@@ -44,7 +48,7 @@
                                     </div>
                                     <div class="text-center">
                                         <a class="txt2" href="<?php echo site_url('/Login')?>">
-                                            Already have a Account?
+                                            Sudah punya akun?
                                         <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                                         </a>
                                     </div>
