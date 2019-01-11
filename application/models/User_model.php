@@ -12,22 +12,22 @@ class User_model extends CI_Model
 		return $query;
 	}
 
-	public function login($username,$password,$level)
-	{
-    	$this->db->select('id_user,username,password');
-    	$this->db->from('tbl_user');
-    	$this->db->where('username',$username);
-		$this->db->where('password',MD5($password));
-		$this->db->where('level', $level);
+	// public function login($username,$password,$level)
+	// {
+    // 	$this->db->select('id_user,username,password');
+    // 	$this->db->from('tbl_user');
+    // 	$this->db->where('username',$username);
+	// 	$this->db->where('password',MD5($password));
+	// 	$this->db->where('level', $level);
 
-		$query =$this->db->get();
-		// return $this->db->get()->row();
-		if($query->num_rows() == 1){
-            return $query->result();
-        }else{
-            return false;
-        }
-	}
+	// 	$query =$this->db->get();
+	// 	// return $this->db->get()->row();
+	// 	if($query->num_rows() == 1){
+    //         return $query->result();
+    //     }else{
+    //         return false;
+    //     }
+	// }
 
 	public function insertUser()
 	{
@@ -37,7 +37,7 @@ class User_model extends CI_Model
 			'nama_user' => $this->input->post('nama_user'),
 			'username' => $this->input->post('username'),
 			'email' => $this->input->post('email'), 
-			'password' => $this->input->post('password'));
+			'password' => $pass);
 		$insert = $this->db->insert('tbl_user',$object);
 		if (!$insert && $this->db->_error_number()==1062) {
 			echo "<script>alert('Username is already used'); </script>";

@@ -39,13 +39,7 @@ class Login extends CI_Controller
         //         $this->session->set_userdata('isLogin', TRUE);
         //         $this->session->set_userdata('username',$username);
         //         redirect('home');
-        //     } else {
-        //         ?>
-        //         <script>
-        //             alert('Failed Login: Check your username and password!');
-        //         </script>
-        //         <?php
-        //     }
+        //     } 
         // }
         $data = array('username' => $this->input->post('username', TRUE),
 						'password' => md5($this->input->post('password', TRUE))
@@ -68,7 +62,8 @@ class Login extends CI_Controller
 			}		
 		}
 		else {
-			echo "<script>alert('Gagal login: Cek username, password!');history.go(-1);</script>";
+            echo "<script>alert('Gagal login: Cek username, password!');
+            history.go(-1);</script>";
 		}
 
     }

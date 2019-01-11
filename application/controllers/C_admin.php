@@ -1,6 +1,4 @@
-<?php
-session_start();
-class C_admin extends CI_Controller {
+<?php class C_admin extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -11,7 +9,7 @@ class C_admin extends CI_Controller {
 	}
 	public function index() {
 		$data['username'] = $this->session->userdata('username');
-		$this->load->view('admin/', $data);
+		$this->load->view('admin/home', $data);
 	}
 
 	public function logout() {

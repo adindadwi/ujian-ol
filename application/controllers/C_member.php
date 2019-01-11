@@ -1,6 +1,4 @@
-<?php
-session_start();
-class C_member extends CI_Controller {
+<?php lass C_member extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
