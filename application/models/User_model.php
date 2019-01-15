@@ -2,6 +2,40 @@
 
 class User_model extends CI_Model
 {
+	private $_table = "tbl_user";
+
+	public $id_user;
+	public $nama_user;
+	public $email;
+	public $username;
+	public $password;
+	public $level;
+
+	public function rules(){
+		return[
+			['field' => 'nama_user',
+			'label' => 'Nama_user',
+			'rules' => 'required'],
+
+			['field' => 'email',
+			'label' => 'Email',
+			'rules' => 'required'],
+
+			['field' => 'username',
+			'label' => 'Username',
+			'rules' => 'required'],
+
+			['field' => 'password',
+			'label' => 'Password',
+			'rules' => 'required'],
+
+			['field' => 'level',
+			'label' => 'Level',
+			'rules' => 'required']
+
+		];
+	}
+
 	function __construct()
     {
         parent::__construct();
@@ -42,6 +76,10 @@ class User_model extends CI_Model
 		if (!$insert && $this->db->_error_number()==1062) {
 			echo "<script>alert('Username is already used'); </script>";
 		}
+	}
+
+	public function getAll(){
+		return $this->db->get($this->_table)->result();
 	}
 
 	public function register($username)
@@ -110,6 +148,10 @@ class User_model extends CI_Model
     //         $this->db->update('users', $object);
 
 	// }
+
+	public function delete($id){
+		return $this->db->delete($this->_table, array('id_user' => $id));
+	}
 
 }
 ?>
